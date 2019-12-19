@@ -83,4 +83,20 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            //хз
+            value = "/deleteName",
+            produces = "text/plain")
+    public ResponseEntity<String> deleteByName(@RequestParam(value = "name") String name) {
+        try {
+            itemService.deleteByName(name);
+            return new ResponseEntity<>(" Item with name = " + name + " was deleted ", HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
