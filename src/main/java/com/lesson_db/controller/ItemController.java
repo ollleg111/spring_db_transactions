@@ -1,8 +1,8 @@
 package com.lesson_db.controller;
 
-import com.lesson_db.exceptions.BadRequestException;
-import com.lesson_db.dao.ItemDAO;
 import com.lesson_db.entity.Item;
+import com.lesson_db.exceptions.BadRequestException;
+import com.lesson_db.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,22 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/item")
 public class ItemController {
-    private ItemDAO itemDao;
+    private ItemService itemService;
 
     @Autowired
-    public ItemController(ItemDAO itemDao) {
-        this.itemDao = itemDao;
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
     }
 
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/save",
             produces = "text/plain")
-//    public ResponseEntity<String> save(Item item) {
     public ResponseEntity<String> save(@RequestBody Item item) {
         try {
-//            itemDao.save(new ObjectMapper().readValue((DataInput) item, Item.class));
-            itemDao.save(item);
+            itemService.save(item);
             return new ResponseEntity<>(" Item was saved ", HttpStatus.CREATED);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -43,11 +41,9 @@ public class ItemController {
             method = RequestMethod.GET,
             value = "/find",
             produces = "text/plain")
-//    public ResponseEntity<String> findById(long id) {
     public ResponseEntity<String> findById(@RequestParam(value = "id") Long id) {
         try {
-//            itemDao.findById(new ObjectMapper().readValue(String.valueOf(id), Long.class));
-            itemDao.findById(id);
+            itemService.findById(id);
             return new ResponseEntity<>(" Item was found ", HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,11 +56,9 @@ public class ItemController {
             method = RequestMethod.PUT,
             value = "/update",
             produces = "text/plain")
-//    public ResponseEntity<String> update(Item item) {
     public ResponseEntity<String> update(@RequestBody Item item) {
         try {
-//            itemDao.update(new ObjectMapper().readValue((DataInput) item, Item.class));
-            itemDao.update(item);
+            itemService.update(item);
             return new ResponseEntity<>(" Item was updated ", HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,11 +72,9 @@ public class ItemController {
             method = RequestMethod.DELETE,
             value = "/delete",
             produces = "text/plain")
-//    public ResponseEntity<String> delete(long id) {
     public ResponseEntity<String> delete(@RequestParam(value = "id") Long id) {
         try {
-//            itemDao.delete(new ObjectMapper().readValue(String.valueOf(id), Long.class));
-            itemDao.delete(id);
+            itemService.delete(id);
             return new ResponseEntity<>(" Item was deleted ", HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

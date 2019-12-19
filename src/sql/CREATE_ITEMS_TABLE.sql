@@ -11,9 +11,6 @@ CREATE SEQUENCE ITEMS_SEQ INCREMENT BY 1 MAXVALUE 1000 CYCLE;
 
 DROP SEQUENCE ITEMS_SEQ;
 
-INSERT INTO item VALUES(101, 'Alex', to_date('2019/05/30:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'), to_date('2019/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'),'aa bb cc dd');
-INSERT INTO item VALUES(102, 'Bob', to_date('2019/05/30:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'), to_date('2019/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'),'aa bb cc dd');
-INSERT INTO item VALUES(103, 'Caddy', to_date('2019/05/30:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'), to_date('2019/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'),'aa bb cc dd');
-INSERT INTO item VALUES(104, 'Dimentor', to_date('2019/05/30:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'), to_date('2019/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'),'aa bb cc dd');
-INSERT INTO item VALUES(105, 'Evgen', to_date('2019/05/30:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'), to_date('2019/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'),'aa bb cc dd');
-INSERT INTO item VALUES(106, 'ForEven', to_date('2019/05/30:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'), to_date('2019/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'),'aa bb cc dd');
+INSERT INTO "MAIN"."ITEMS" (ITEM_ID, NAME, DATE_CREATED, DATE_UPDATED, DESCRIPTION) VALUES ('101', N'Andrey', TO_TIMESTAMP('2019-05-01 16:27:44.958000000', 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP('2019-06-01 16:27:56.779000000', 'YYYY-MM-DD HH24:MI:SS.FF'), N'test1')
+INSERT INTO "MAIN"."ITEMS" (ITEM_ID, NAME, DATE_CREATED, DATE_UPDATED, DESCRIPTION) VALUES ('102', N'Ighor', TO_TIMESTAMP('2019-12-01 16:28:18.772000000', 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP('2019-12-03 16:28:25.793000000', 'YYYY-MM-DD HH24:MI:SS.FF'), N'test2')
+INSERT INTO "MAIN"."ITEMS" (ITEM_ID, NAME, DATE_CREATED, DATE_UPDATED, DESCRIPTION) VALUES ('103', N'Bob', TO_TIMESTAMP('2019-12-09 16:28:50.234000000', 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP('2019-12-19 16:28:57.332000000', 'YYYY-MM-DD HH24:MI:SS.FF'), N'test3')
