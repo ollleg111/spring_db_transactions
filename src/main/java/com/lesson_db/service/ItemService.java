@@ -31,4 +31,8 @@ public class ItemService {
     public void delete(long id) {
         itemDao.delete(id);
     }
+
+    public void deleteByName(String name){
+        itemDao.deleteByName(name);
+    }
 }

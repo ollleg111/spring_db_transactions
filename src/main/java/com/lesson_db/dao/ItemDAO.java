@@ -24,6 +24,9 @@ public class ItemDAO {
         this.item = item;
     }
 
+    private static final String NAME_LIKE = "SELECT * FROM ITEMS WHERE ITEMS.NAME LIKE ?";
+    private static final String SELECT_FROM = "SELECT * FROM ITEMS";
+
     public Item findById(long id) {
         return entityManager.find(Item.class, id);
     }
@@ -41,7 +44,14 @@ public class ItemDAO {
         deleteItem(entity);
     }
 
-    //хз
+    public void deleteByName(String name) {
+        assert entityManager != null;
+        Query query = entityManager.createNativeQuery(NAME_LIKE, Item.class);
+        query.setParameter(1, "%" + name + "%");
+        Item entity = (Item) query.getSingleResult();
+        deleteItem(entity);
+    }
+
     public void deleteItem(Item item) {
         entityManager.remove(item);
     }
@@ -49,7 +59,7 @@ public class ItemDAO {
     //хз
     public List findAll() {
         assert entityManager != null;
-        Query query = entityManager.createNativeQuery("SELECT * FROM ITEM", Item.class);
+        Query query = entityManager.createNativeQuery(SELECT_FROM, Item.class);
         return query.getResultList();
     }
 }
