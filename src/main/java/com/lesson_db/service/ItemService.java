@@ -45,7 +45,7 @@ public class ItemService {
 
     private void itemNullValidator(Item item) throws RuntimeException {
         if (item == null) throw new BadRequestException("Item does not exist in method" +
-                " itemNullValidator(Storage storage) from class " +
+                " itemNullValidator(Item item) from class " +
                 Item.class.getName());
     }
 }
