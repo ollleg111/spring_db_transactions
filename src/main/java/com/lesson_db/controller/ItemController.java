@@ -3,6 +3,7 @@ package com.lesson_db.controller;
 import com.lesson_db.entity.Item;
 import com.lesson_db.exceptions.BadRequestException;
 import com.lesson_db.service.ItemService;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ItemController {
             method = RequestMethod.POST,
             value = "/save",
             produces = "text/plain")
-    public ResponseEntity<String> save(@RequestBody Item item) {
+    public ResponseEntity<String> save(@RequestBody Item item) throws HibernateException {
         try {
             itemService.save(item);
             return new ResponseEntity<>(" Item was saved ", HttpStatus.CREATED);
@@ -41,7 +42,7 @@ public class ItemController {
             method = RequestMethod.GET,
             value = "/find",
             produces = "text/plain")
-    public ResponseEntity<String> findById(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<String> findById(@RequestParam(value = "id") Long id) throws HibernateException {
         try {
             itemService.findById(id);
             return new ResponseEntity<>(" Item was found ", HttpStatus.OK);
@@ -56,7 +57,7 @@ public class ItemController {
             method = RequestMethod.PUT,
             value = "/update",
             produces = "text/plain")
-    public ResponseEntity<String> update(@RequestBody Item item) {
+    public ResponseEntity<String> update(@RequestBody Item item) throws HibernateException {
         try {
             itemService.update(item);
             return new ResponseEntity<>(" Item was updated ", HttpStatus.OK);
@@ -72,7 +73,7 @@ public class ItemController {
             method = RequestMethod.DELETE,
             value = "/delete",
             produces = "text/plain")
-    public ResponseEntity<String> delete(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<String> delete(@RequestParam(value = "id") Long id) throws HibernateException {
         try {
             itemService.delete(id);
             return new ResponseEntity<>(" Item was deleted ", HttpStatus.OK);
@@ -89,7 +90,7 @@ public class ItemController {
             //хз
             value = "/deleteName",
             produces = "text/plain")
-    public ResponseEntity<String> deleteByName(@RequestParam(value = "name") String name) {
+    public ResponseEntity<String> deleteByName(@RequestParam(value = "name") String name) throws HibernateException {
         try {
             itemService.deleteByName(name);
             return new ResponseEntity<>(" Item with name = " + name + " was deleted ", HttpStatus.OK);
