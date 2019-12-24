@@ -32,7 +32,7 @@ public class ItemDAO {
         try {
             item = entityManager.find(Item.class, id);
         } catch (HibernateException e) {
-            System.err.println("findById(long id) is failed");
+            System.err.println("The method findById(long id) is failed");
             System.err.println(e.getMessage());
         }
         return item;
@@ -42,7 +42,7 @@ public class ItemDAO {
         try {
             entityManager.persist(item);
         } catch (HibernateException e) {
-            System.err.println("save(Item item) is failed");
+            System.err.println("The method save(Item item) is failed");
             System.err.println(e.getMessage());
         }
     }
@@ -51,7 +51,7 @@ public class ItemDAO {
         try {
             item = entityManager.merge(item);
         } catch (HibernateException e) {
-            System.err.println("update(Item item) is failed");
+            System.err.println("The method update(Item item) is failed");
             System.err.println(e.getMessage());
         }
         return item;
@@ -79,7 +79,7 @@ public class ItemDAO {
         try {
             entityManager.remove(item);
         } catch (HibernateException e) {
-            System.err.println("deleteItem(Item item) is failed");
+            System.err.println("The method deleteItem(Item item) is failed");
             System.err.println(e.getMessage());
         }
     }
