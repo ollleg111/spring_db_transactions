@@ -6,7 +6,6 @@ import com.lesson_db.exceptions.BadRequestException;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 public class ItemService {
