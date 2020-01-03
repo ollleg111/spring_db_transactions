@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/item")
 public class ItemController {
@@ -27,10 +29,10 @@ public class ItemController {
             method = RequestMethod.POST,
             value = "/save",
             produces = "text/plain")
-    public ResponseEntity<String> save(@RequestBody Item item) throws HibernateException {
+    public ResponseEntity<Item> save(@RequestBody Item item) throws HibernateException {
         try {
             itemService.save(item);
-            return new ResponseEntity<>(" Item was saved ", HttpStatus.CREATED);
+            return new ResponseEntity<>(itemService.save(item), HttpStatus.CREATED);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -42,10 +44,9 @@ public class ItemController {
             method = RequestMethod.GET,
             value = "/find",
             produces = "text/plain")
-    public ResponseEntity<String> findById(@RequestParam(value = "id") Long id) throws HibernateException {
+    public ResponseEntity<Item> findById(@RequestParam(value = "id") Long id) throws HibernateException {
         try {
-            itemService.findById(id);
-            return new ResponseEntity<>(" Item was found ", HttpStatus.OK);
+            return new ResponseEntity<>(itemService.findById(id), HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -57,10 +58,9 @@ public class ItemController {
             method = RequestMethod.PUT,
             value = "/update",
             produces = "text/plain")
-    public ResponseEntity<String> update(@RequestBody Item item) throws HibernateException {
+    public ResponseEntity<Item> update(@RequestBody Item item) throws HibernateException {
         try {
-            itemService.update(item);
-            return new ResponseEntity<>(" Item was updated ", HttpStatus.OK);
+            return new ResponseEntity<>(itemService.update(item), HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -87,13 +87,26 @@ public class ItemController {
 
     @RequestMapping(
             method = RequestMethod.DELETE,
-            //хз
             value = "/deleteName",
             produces = "text/plain")
     public ResponseEntity<String> deleteByName(@RequestParam(value = "name") String name) throws HibernateException {
         try {
             itemService.deleteByName(name);
             return new ResponseEntity<>(" Item with name = " + name + " was deleted ", HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/findAll",
+            produces = "text/plain")
+    public ResponseEntity<List<Item>> findAll() throws HibernateException {
+        try {
+            return new ResponseEntity<>(itemService.findAll(), HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

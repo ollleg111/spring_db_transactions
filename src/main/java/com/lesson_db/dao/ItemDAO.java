@@ -28,6 +28,7 @@ public class ItemDAO {
     private static final String NAME_LIKE = "SELECT * FROM ITEMS WHERE ITEMS.NAME LIKE ?";
     private static final String SELECT_FROM = "SELECT * FROM ITEMS";
 
+    @Transactional
     public Item findById(long id) throws HibernateException {
         try {
             item = entityManager.find(Item.class, id);
@@ -38,15 +39,18 @@ public class ItemDAO {
         return item;
     }
 
-    public void save(Item item) throws HibernateException {
+    @Transactional
+    public Item save(Item item) throws HibernateException {
         try {
             entityManager.persist(item);
         } catch (HibernateException e) {
             System.err.println("The method save(Item item) is failed");
             System.err.println(e.getMessage());
         }
+        return item;
     }
 
+    @Transactional
     public Item update(Item item) throws HibernateException {
         try {
             item = entityManager.merge(item);
@@ -61,8 +65,8 @@ public class ItemDAO {
         deleteItem(findById(id));
     }
 
+    @Transactional
     public void deleteByName(String name) throws BadRequestException {
-        assert entityManager != null;
         try {
             Query query = entityManager.createNativeQuery(NAME_LIKE, Item.class);
             query.setParameter(1, "%" + name + "%");
@@ -75,6 +79,7 @@ public class ItemDAO {
         }
     }
 
+    @Transactional
     public void deleteItem(Item item) throws HibernateException {
         try {
             entityManager.remove(item);
@@ -84,9 +89,8 @@ public class ItemDAO {
         }
     }
 
-    //хз
-    public List findAll() throws HibernateException {
-        assert entityManager != null;
+    @Transactional
+    public List<Item> findAll() throws HibernateException {
         try {
             Query query = entityManager.createNativeQuery(SELECT_FROM, Item.class);
             return query.getResultList();

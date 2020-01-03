@@ -7,6 +7,8 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 @Controller
 public class ItemService {
     private ItemDAO itemDao;
@@ -16,8 +18,8 @@ public class ItemService {
         this.itemDao = itemDao;
     }
 
-    public void save(Item item) throws HibernateException {
-        itemDao.save(item);
+    public Item save(Item item) throws HibernateException {
+        return itemDao.save(item);
     }
 
     public Item findById(long id) throws RuntimeException {
@@ -38,12 +40,22 @@ public class ItemService {
     }
 
     public void deleteByName(String name) throws HibernateException {
+        validationString(name);
         itemDao.deleteByName(name);
+    }
+
+    public List<Item> findAll() throws HibernateException{
+        return itemDao.findAll();
     }
 
     private void itemNullValidator(Item item) throws RuntimeException {
         if (item == null) throw new BadRequestException("Item does not exist in method" +
                 " itemNullValidator(Item item) from class " +
                 Item.class.getName());
+    }
+
+    private void validationString(String name) throws BadRequestException {
+        if (name.isEmpty()) throw new BadRequestException(" Field: name is empty in method +" +
+                "deleteByName(String name) from class " + ItemDAO.class.getName());
     }
 }
