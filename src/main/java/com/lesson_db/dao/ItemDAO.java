@@ -13,7 +13,6 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-@Transactional
 public class ItemDAO {
     private Item item;
 
